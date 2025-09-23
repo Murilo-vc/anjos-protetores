@@ -13,12 +13,12 @@ import Cadastro from './routes/Cadastro/Cadastro.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App><Login /></App>,
-  },
-  {
-    path: "cadastro",
-    element: <App><Cadastro /></App>,
-  },
+    element: <App />,
+    children: [
+      { path: "login", element: <Login /> },
+      { path: "cadastro", element: <Cadastro /> },
+    ]
+  }
 ]);
 
 createRoot(document.getElementById('root')).render(

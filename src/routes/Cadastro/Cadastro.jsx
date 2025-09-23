@@ -69,7 +69,7 @@ const Cadastro = () => {
                 <button>Cadastrar</button>
 
                 <div className="login-link">
-                    <p>Já tem uma conta? <a href="#">Entrar</a></p>
+                    <p>Já tem uma conta? <a href="/login">Entrar</a></p>
                 </div>
             </form>
         </div>

@@ -1,12 +1,13 @@
-import './App.css'
-import Login from './routes/Login/Login';
+
+import './App.css';
+import { Outlet } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-      <Login />
+      <Outlet />
     </div>
   );
 }
 
-export default App
+export default App;
