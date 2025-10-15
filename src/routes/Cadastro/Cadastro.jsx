@@ -1,8 +1,8 @@
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 import { useState } from 'react';
-import { TiArrowBackOutline } from "react-icons/ti";
 import './Cadastro.css';
 import logo from '../../assets/logo.png';
+import axios from 'axios';
 
 const Cadastro = () => {
 
@@ -11,16 +11,33 @@ const Cadastro = () => {
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
 
-    const handleSubmit = (event) => {
-        event.preventDefault(); //isso é para não recarregar a página
+    const handleSubmit = async (event) => { 
+        event.preventDefault();
 
         if (senha !== confirmarSenha) {
             alert('As senhas não coincidem!');
             return;
         }
 
-        // Lógica de cadastro aqui
-        alert(`Nome: ${nome}\nE-mail: ${email}\nSenha: ${senha}`);
+        try {
+          
+            const signUpPayload = {
+                name: nome,
+                email: email,
+                password: senha,
+            };
+
+            
+            await axios.post('http://localhost:8080/api/auth/signUp', signUpPayload);
+
+           
+            alert('Cadastro realizado com sucesso! Agora podes fazer o login.');
+            window.location.href = '/login';
+
+        } catch (error) {
+            alert('Falha no cadastro. O e-mail pode já estar em uso.');
+            console.error('Ocorreu um erro no cadastro:', error);
+        }
     };
 
     return (
@@ -29,12 +46,11 @@ const Cadastro = () => {
                 <div className="logo">
                     <img src={logo} alt="Logo" />
                 </div>
-                <h1>Anjos Protetores de Animais   Cadastro</h1>
-
+                <h1>Anjos Protetores de Animais - Cadastro</h1>
 
                 <div className='input-field'>
                     <input
-                        type="nome"
+                        type="text" // Tipo corrigido para text
                         placeholder="Nome completo"
                         onChange={(e) => setNome(e.target.value)}
                         required

@@ -3,16 +3,36 @@ import { useState } from 'react';
 import { TiArrowBackOutline } from "react-icons/ti";
 import './Login.css';
 import logo from '../../assets/logo.png';
+import axios from 'axios';
 
 const Login = () => {
 
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState(''); 
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => { 
         event.preventDefault();
-        // Lógica de autenticação aqui
-        alert(`Usuário: ${username}\nSenha: ${password}`);
+
+        try {
+            
+            const loginPayload = {
+                email: email,
+                password: password,
+            };
+
+            
+            const response = await axios.post('http://localhost:8080/api/auth/login', loginPayload);
+
+           
+            alert('Login realizado com sucesso!');
+            console.log('Token de acesso:', response.data.token);
+            
+
+        } catch (error) {
+            
+            alert('Falha no login. Verifique seu e-mail e senha.');
+            console.error('Ocorreu um erro no login:', error);
+        }
     };
 
     return (
@@ -24,8 +44,9 @@ const Login = () => {
                 </div>
                 <h1>Anjos Protetores de Animais Login</h1>
                 <div className='input-field'>
+                    {/* O `onChange` agora atualiza o estado 'email' */}
                     <input type="email" placeholder="E-mail"
-                        onChange={(e) => setUsername(e.target.value)} />
+                        onChange={(e) => setEmail(e.target.value)} />
                     <FaUser className='icon' />
                 </div>
                 <div className='input-field'>
@@ -46,7 +67,6 @@ const Login = () => {
                 </div>
             </form>
         </div>
-
     )
 }
 
