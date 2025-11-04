@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import api from "../../services/api";
 import './Inicio.css';
 
 const Inicio = () => {
@@ -8,42 +9,43 @@ const Inicio = () => {
 
     // Simulação de dados dos cachorros disponíveis para adoção
     useEffect(() => {
-        const fetchDogs = () => {
-            const mockDogs = [
-                {
-                    id: 1,
-                    name: "Rex",
-                    age: "2 anos",
-                    breed: "Vira-lata",
-                    size: "Médio",
-                    image: "https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                    id: 2,
-                    name: "Luna",
-                    age: "1 ano",
-                    breed: "Labrador",
-                    size: "Grande",
-                    image: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                    id: 3,
-                    name: "Bolt",
-                    age: "3 meses",
-                    breed: "Golden Retriever",
-                    size: "Pequeno",
-                    image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                    id: 4,
-                    name: "Mel",
-                    age: "4 anos",
-                    breed: "Poodle",
-                    size: "Pequeno",
-                    image: "https://images.unsplash.com/photo-1517423568366-8b83523034fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
-                }
-            ];
-            setDogs(mockDogs);
+        const fetchDogs = async () => {
+            const { data } = await api.get("/api/animals");
+            // const mockDogs = [
+            //     {
+            //         id: 1,
+            //         name: "Rex",
+            //         age: "2 anos",
+            //         breed: "Vira-lata",
+            //         size: "Médio",
+            //         image: "https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+            //     },
+            //     {
+            //         id: 2,
+            //         name: "Luna",
+            //         age: "1 ano",
+            //         breed: "Labrador",
+            //         size: "Grande",
+            //         image: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+            //     },
+            //     {
+            //         id: 3,
+            //         name: "Bolt",
+            //         age: "3 meses",
+            //         breed: "Golden Retriever",
+            //         size: "Pequeno",
+            //         image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+            //     },
+            //     {
+            //         id: 4,
+            //         name: "Mel",
+            //         age: "4 anos",
+            //         breed: "Poodle",
+            //         size: "Pequeno",
+            //         image: "https://images.unsplash.com/photo-1517423568366-8b83523034fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+            //     }
+            // ];
+            setDogs(data);
         };
 
         fetchDogs();
@@ -107,7 +109,7 @@ const Inicio = () => {
                             <a href="#about" className="nav-link">Sobre</a>
                         </li>
                         <li className="nav-item">
-                            <a href="#dogs" className="nav-link">Cachorros</a>
+                            <a href="animals" className="nav-link">Animais</a>
                         </li>
                         <li className="nav-item">
                             <a href="#process" className="nav-link">Processo</a>
@@ -171,7 +173,7 @@ const Inicio = () => {
             {/* Dogs Section */}
             <section id="dogs" className="dogs-section">
                 <div className="container">
-                    <h2>Cães Disponíveis para Adoção</h2>
+                    <h2>Animais Disponíveis para Adoção</h2>
                     <p className="section-subtitle">Conheça alguns dos nossos anjinhos que estão procurando um lar</p>
                     
                     <div className="dogs-carousel">
@@ -195,8 +197,8 @@ const Inicio = () => {
                                         <div className="dog-info">
                                             <h3>{dog.name}</h3>
                                             <p><strong>Idade:</strong> {dog.age}</p>
-                                            <p><strong>Raça:</strong> {dog.breed}</p>
-                                            <p><strong>Porte:</strong> {dog.size}</p>
+                                            <p><strong>Especie:</strong> {dog.specie.name}</p>
+                                            <p>{dog.description}</p>
                                         </div>
                                     </div>
                                 </div>

@@ -13,6 +13,7 @@ import Inicio from './routes/Inicio/Inicio.jsx';
 import Perfil from './routes/Perfil/Perfil.jsx';
 import EditarPerfil from './routes/Perfil/EditarPerfil.jsx';
 import PrivateRoute from './routes/PrivateRoute.jsx';
+import Animais from './routes/Animais/Animais.jsx';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "cadastro", element: <Cadastro /> },
       { path: "perfil", element: (<PrivateRoute> <Perfil /> </PrivateRoute>) },
       {path: "perfil/editar", element: (<PrivateRoute> <EditarPerfil /> </PrivateRoute>) },
+      { path: "animals", element: <Animais />}
     ]
   }
 ]);
